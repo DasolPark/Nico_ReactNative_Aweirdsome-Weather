@@ -4,23 +4,26 @@ import Weather from "./weather";
 
 export default class App extends Component {
   state = {
-    isLoaded: false
+    isLoaded: false,
+    error: null
   };
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       position => {
-        console.log(position);
         this.setState({
+          // error: "Something went wrong"
           isLoaded: true
         });
       },
       error => {
-        console.log(error);
+        this.setState({
+          error: error
+        });
       }
     );
   }
   render() {
-    const { isLoaded } = this.state;
+    const { isLoaded, error } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
@@ -31,6 +34,7 @@ export default class App extends Component {
             <Text style={styles.loadingText}>
               Getting the aweirdsome weather
             </Text>
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
           </View>
         )}
       </View>
@@ -42,6 +46,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff"
+  },
+  errorText: {
+    color: "red",
+    backgroundColor: "transparent",
+    marginBottom: 40
   },
   loading: {
     flex: 1,
