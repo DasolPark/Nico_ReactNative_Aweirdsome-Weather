@@ -4,8 +4,21 @@ import Weather from "./weather";
 
 export default class App extends Component {
   state = {
-    isLoaded: true
+    isLoaded: false
   };
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        console.log(position);
+        this.setState({
+          isLoaded: true
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
   render() {
     const { isLoaded } = this.state;
     return (
@@ -38,6 +51,6 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 38,
-    marginBottom: 100
+    marginBottom: 24
   }
 });
