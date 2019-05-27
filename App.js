@@ -25,7 +25,7 @@ export default class App extends Component {
   }
   _getWeather = (lat, lon) => {
     fetch(
-      `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}`
+      `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}&units=metric`
     )
       .then(response => response.json())
       .then(json => {
@@ -43,7 +43,7 @@ export default class App extends Component {
       <View style={styles.container}>
         <StatusBar hidden={true} />
         {isLoaded ? (
-          <Weather weatherName={name} temp={Math.floor(temperature - 273.15)} />
+          <Weather weatherName={name} temp={Math.floor(temperature)} />
         ) : (
           <View style={styles.loading}>
             <Text style={styles.loadingText}>
